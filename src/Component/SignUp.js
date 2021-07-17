@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { useHistory } from 'react-router';
 import { AuthContext } from '../Context/AuthProvider';
 import { storage, database } from '../firebase'
 
@@ -9,8 +10,10 @@ function SignUp() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [file, setFile] = useState(null);
-    const { signup } = useContext(AuthContext);
+    const { signup, currentUser } = useContext(AuthContext);
+    const history = useHistory();
     // console.log(signup);
+
     const handleSignup = async (e) => {
         e.preventDefault(); // event of submission - reload the page - to prevent that
         try {
@@ -56,6 +59,7 @@ function SignUp() {
                 })
                 setLoading(false);
                 console.log('User has Signed Up.')
+                history.push('/');
             }
         }
         catch (err) {
@@ -66,6 +70,7 @@ function SignUp() {
             setLoading(false);
         }
     }
+
     const handleFileSubmit = (e) => {
         let file = e.target.files[0]; // e.target.files gives an array, file is present at 0th index 
         console.log(file);
@@ -73,6 +78,13 @@ function SignUp() {
             setFile(file);
         }
     }
+
+    useEffect(() => {
+        if (currentUser) {
+            history.push('/')
+        }
+    }, [])
+
     return (
         <div>
             <form onSubmit={handleSignup}>

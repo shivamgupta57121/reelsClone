@@ -1,13 +1,16 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../Context/AuthProvider'
+import { useHistory } from 'react-router';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login } = useContext(AuthContext);
+    const { login, currentUser } = useContext(AuthContext);
+    const history = useHistory();
     // console.log(login);
+
     const handleLogin = async (e) => {
         console.log('hi');
         e.preventDefault();
@@ -18,14 +21,23 @@ function Login() {
             let uid = res.user.uid;
             console.log(uid);
             setLoading(false);
+            history.push('/');
         } catch (error) {
-            setError(error);
+            console.log(error.message);
+            setError('Failed to Login');
             setTimeout(() => {
                 setError('');
             }, 2000);
             setLoading(false);
         }
     }
+
+    useEffect(() => {
+        if (currentUser) {
+            history.push('/')
+        }
+    }, [])
+
     return (
         <div>
             <form onSubmit={handleLogin}>
@@ -38,6 +50,7 @@ function Login() {
                     <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <button type='submit' disabled={loading}>Login</button>
+                {error ? <h1>{error}</h1> : <></>}
             </form>
         </div>
     )
