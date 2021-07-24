@@ -5,6 +5,7 @@ import Header from './Header'
 import UploadFile from './UploadFile'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './Feed.css'
+import Posts from './Posts.js'
 
 function Feed() {
     const { currentUser } = useContext(AuthContext);
@@ -24,6 +25,7 @@ function Feed() {
                     <div className='feed-container'>
                         <div className='center'>
                             <UploadFile userData={userData} />
+                            <Posts userData={userData} />
                         </div>
                     </div>
                 </>
