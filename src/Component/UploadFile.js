@@ -46,7 +46,7 @@ function UploadFile(props) {
         }
         function fn2(error) {
             setError(error);
-            setTimeout(() => { setError(''); }, 2000);
+            setTimeout(() => { setError(null); }, 2000);
             setLoading(false);
         }
         function fn3() {
