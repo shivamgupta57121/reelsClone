@@ -1,6 +1,6 @@
 import React from 'react'
-
-function Video(props) {
+/************ Intersection Observer POC Video Component ************/
+function VideoIOA(props) {
     const handleMute = (e) => {
         e.preventDefault();
         e.target.muted = !e.target.muted;
@@ -14,4 +14,4 @@ function Video(props) {
     )
 }
 
-export default Video
+export default VideoIOA
