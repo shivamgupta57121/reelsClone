@@ -15,6 +15,7 @@ import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import './Posts.css'
 import Video from './Video'
+import Likes from './Likes'
 import { database } from '../firebase'
 
 const useStyles = makeStyles({
@@ -128,6 +129,7 @@ function Posts({ userData = null }) {
                                             <Avatar src={post.uProfile} />
                                             <h4>{post.uName}</h4>
                                         </div>
+                                        <Likes userData={userData} postData={post} />
                                         <ChatBubbleIcon onClick={() => handleClickOpen(post.pId)} className={`${classes.ci} icon-styling`} />
                                         <Dialog maxWidth="md" onClose={handleClose} aria-labelledby="customized-dialog-title" open={openId === post.pId}>
                                             <MuiDialogContent>
