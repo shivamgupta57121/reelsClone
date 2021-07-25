@@ -66,6 +66,14 @@ const useStyles = makeStyles({
 function Posts({ userData = null }) {
     const classes = useStyles();
     const [posts, setPosts] = useState(null);
+    /***************** State for Post Dialog Box *****************/
+    const [openId, setOpenId] = useState(null);
+    const handleClickOpen = (id) => {
+        setOpenId(id);
+    };
+    const handleClose = () => {
+        setOpenId(null);
+    };
 
     /***************** Intersection Observer API *****************/
     const callback = entries => {
@@ -120,7 +128,49 @@ function Posts({ userData = null }) {
                                             <Avatar src={post.uProfile} />
                                             <h4>{post.uName}</h4>
                                         </div>
+                                        <ChatBubbleIcon onClick={() => handleClickOpen(post.pId)} className={`${classes.ci} icon-styling`} />
+                                        <Dialog maxWidth="md" onClose={handleClose} aria-labelledby="customized-dialog-title" open={openId === post.pId}>
+                                            <MuiDialogContent>
+                                                <div className='dcontainer'>
+                                                    <div className='video-part'>
+                                                        <video autoPlay={true} className='video-styles2' controls id={post.id} muted="muted" type="video/mp4" >
+                                                            <source src={post.pUrl} type="video/webm" />
+                                                        </video>
+                                                    </div>
+                                                    <div className='info-part'>
+                                                        <Card>
+                                                            <CardHeader
+                                                                avatar={
+                                                                    <Avatar src={post?.uProfile} aria-label="recipe" className={classes.avatar}>
+                                                                    </Avatar>
+                                                                }
+                                                                action={
+                                                                    <IconButton aria-label="settings">
+                                                                        <MoreVertIcon />
+                                                                    </IconButton>
+                                                                }
+                                                                title={post?.uName}
+
+                                                            />
+
+                                                            <hr style={{ border: "none", height: "1px", color: "#dfe6e9", backgroundColor: "#dfe6e9" }} />
+                                                            <CardContent className={classes.seeComments}>
+
+                                                            </CardContent>
+
+                                                        </Card>
+                                                        <div className='extra'>
+                                                            <div className='likes'>
+                                                                <Typography className={classes.typo} variant='body2'>Liked By {post.likes.length == 0 ? 'nobody' : ` others`}</Typography>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </MuiDialogContent>
+                                        </Dialog>
                                     </div>
+                                    <div className='place'></div>
                                 </React.Fragment>
                             ))
                         }
